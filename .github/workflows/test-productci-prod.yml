@@ -51,7 +51,7 @@ jobs:
 
       - name: Create Product
         run: |
-          curl --fail -X POST http://localhost:3000/api/products \
+          curl -i -X POST http://localhost:3000/api/products \
             -H "Content-Type: application/json" \
             -d '{"pid":"CI-001","pname":"CI Product","price":100000,"quantity":10}'
 

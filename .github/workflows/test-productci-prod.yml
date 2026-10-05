@@ -51,7 +51,7 @@ jobs:
 
       - name: Create Product
         run: |
-          curl --fail -X POST http://localhost:3000/api/products \
+          curl -i -X POST http://localhost:3000/api/products \
             -H "Content-Type: application/json" \
             -d '{"pid":"CI-001","pname":"CI Product","price":100000,"quantity":10}'
 
@@ -65,13 +65,13 @@ jobs:
 
       - name: Update Product
         run: |
-          curl --fail -X PUT http://localhost:3000/api/products/CI-001 \
+          curl -i -X PUT http://localhost:3000/api/products/CI-001 \
             -H "Content-Type: application/json" \
             -d '{"pname":"Updated CI Product","price":120000,"quantity":15}'
 
       - name: Delete Product
         run: |
-          curl --fail -X DELETE http://localhost:3000/api/products/CI-001
+          curl -i -X DELETE http://localhost:3000/api/products/CI-001
 
       - name: Show API log if failed
         if: failure()

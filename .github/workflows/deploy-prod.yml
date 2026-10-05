@@ -1,0 +1,29 @@
+name: Production Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - Docker Hub CD
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion== 'success' }}
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Pull latest Docker image
+        run: docker compose -f docker-compose-prod.yaml pull product-api
+
+      - name: Deploy production containers
+        run: docker compose -f docker-compose-prod.yaml up -d
+
+      - name: Check production API
+        run: curl.exe --fail http://localhost:3001/health
+
+      - name: Show containers
+        run: docker ps
